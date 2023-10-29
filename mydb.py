@@ -1,30 +1,26 @@
 import mysql.connector
 
 class dataBase:
-    def __init__(self)-> None:
+    def __init__(self):
         pass
 
-    def _validateData(self, username : str, password : str) -> bool:
-        self.username = username
-        self.passw = password
+    def _validateData(self, username : str, password : str):
 
-        if (self.username == ""):
+        if (username == ""):
             return False
 
         try:
             self.conexion = mysql.connector.connect(
-                password = self.passw,
-                user = self.username,
+                password = password,
+                user = username,
                 host = "localhost",
             )
 
             self.cur = self.conexion.cursor()
-
             return True
 
         except mysql.connector.Error as err:
             print(err)
-
             return False
 
     def _getDataBases(self):
@@ -68,10 +64,6 @@ class dataBase:
     def _getColumnsFrom(self, table : str):
         self.cur.execute(f"SHOW COLUMNS FROM {table}")
         return self.cur.fetchall()
-
-    def _logOut(self):
-        self.username = ""
-        self.passw = ""
 
 if __name__ == "__main__":
     debug = dataBase()
